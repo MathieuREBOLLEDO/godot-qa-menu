@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/qa/debug/qa_window.gd" id="1_script"]
+
+[node name="QAWindow" type="Window"]
+title = "QA : Testeur de niveau"
+position = Vector2i(480, 40)
+size = Vector2i(420, 420)
+script = ExtResource("1_script")
