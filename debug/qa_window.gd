@@ -34,10 +34,10 @@ func _build() -> void:
 	if qa.state == QAScript.State.IDLE:
 		var record: Button = add_button("Enregistrer une partie", func() -> void: qa.start_recording())
 		record.disabled = level_id == ""
-		add_note("Recharge le niveau à son départ et enregistre la partie jusqu'à sa fin (sortie...). Jouer normalement.")
+		add_hint("Recharge le niveau à son départ et enregistre la partie jusqu'à sa fin (sortie...). Jouer normalement.")
 	else:
 		add_buttons("", ["Arrêter", "Annuler"], func(index: int) -> void: qa.stop(index == 0))
-		add_note("Arrêter garde la partie (non réussie) ; Annuler la jette.")
+		add_hint("Arrêter garde la partie (non réussie) ; Annuler la jette.")
 	add_check("Afficher le parcours", func() -> bool: return qa.show_trace, func(value: bool) -> void: qa.show_trace = value)
 
 	add_section("Parties enregistrées")
@@ -58,7 +58,7 @@ func _build() -> void:
 					1: qa.show_run_trace(path)
 					2: qa.record_video(path)
 			)
-		add_note("Rejouer : recharge le niveau et rejoue les entrées (ne pas toucher au clavier). Parcours : le montre sans rejouer. Vidéo : rejoue la partie dans une deuxième fenêtre du jeu, en Movie Maker.")
+		add_hint("Rejouer : recharge le niveau et rejoue les entrées (ne pas toucher au clavier). Parcours : le montre sans rejouer. Vidéo : rejoue la partie dans une deuxième fenêtre du jeu, en Movie Maker.")
 
 	add_section("Dernière lecture")
 	add_live_label(func() -> String: return QAScript.report_text(qa.last_report))
