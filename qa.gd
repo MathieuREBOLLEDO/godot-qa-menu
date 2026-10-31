@@ -38,6 +38,8 @@ const EXIT_DELAY: float = 1.0
 const STARTUP_FRAMES: int = 10
 
 var adapter: QAAdapter = null
+## Stats des joueurs (addons/qa/stats), enfant « Stats ».
+var stats: QAStats = null
 var state: State = State.IDLE
 ## Frame physique de la partie en cours.
 var frame: int = 0
@@ -71,6 +73,9 @@ func _ready() -> void:
 	var debug_menu: Node = get_node_or_null(DEBUG_MENU_PATH)
 	if debug_menu != null:
 		debug_menu.add_entry("QA", "Testeur de niveau", load(WINDOW_PATH))
+	stats = QAStats.new()
+	stats.name = "Stats"
+	add_child(stats)
 
 	var replay_path: String = ""
 	for arg: String in OS.get_cmdline_user_args():
