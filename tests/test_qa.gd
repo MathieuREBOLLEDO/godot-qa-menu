@@ -127,6 +127,43 @@ func test_cannot_start_twice() -> void:
 	assert_false(_qa.start_recording(), "already recording")
 
 
+func test_stopped_recording_is_kept_as_not_successful() -> void:
+	assert_true(_qa.start_recording())
+	assert_true(await until(func() -> bool: return _qa.state == _qa.State.RECORDING, 1.0), "level attached")
+	await physics_frames(5)
+	_qa.stop(true)
+	assert_eq(_qa.state, _qa.State.IDLE)
+	var run: QARun = load(_qa.run_path) as QARun
+	if assert_not_null(run, "kept: %s" % _qa.run_path):
+		assert_false(run.success, "not a success")
+		assert_eq(run.frame_count, run.trace.size(), "trace up to the stop")
+
+
+func test_cancelled_recording_is_not_saved() -> void:
+	var before: int = _qa.list_runs("fake_level").size()
+	assert_true(_qa.start_recording())
+	await until(func() -> bool: return _qa.state == _qa.State.RECORDING, 1.0)
+	_qa.stop(false)
+	assert_eq(_qa.list_runs("fake_level").size(), before, "nothing saved")
+
+
+func test_missing_run_is_refused() -> void:
+	expect_error("Cannot open file")
+	expect_error("Failed loading resource")
+	expect_error("QA : partie introuvable")
+	assert_false(_qa.replay_file(RUNS_DIR + "fake_level/missing.tres"))
+	assert_eq(_qa.state, _qa.State.IDLE)
+
+
+func test_report_text() -> void:
+	assert_eq(_qa.report_text({}), "Aucune lecture.")
+	var report: Dictionary = {"ok": false, "success": false, "reason": "pas de fin", "frames": 90, "expected_frames": 60,
+			"expected_success": true, "divergence_frame": 12, "divergence_distance": 3.0}
+	var text: String = _qa.report_text(report)
+	assert_true(text.begins_with("ÉCHEC"), text)
+	assert_true(text.contains("frame 12"), "divergence frame shown")
+
+
 # --- Stats ---
 
 func test_stats_text_helpers() -> void:

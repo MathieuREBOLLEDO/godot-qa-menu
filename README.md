@@ -213,3 +213,13 @@ godot --headless --fixed-fps 60 --path <jeu> res://addons/test_runner/runner.tsc
 Sans test runner dans le projet, ces fichiers ne sont pas chargés (ni à
 l'import ni au lancement) ; seule leur ouverture montre une erreur de classe
 de base. Ils n'utilisent aucun fichier du jeu.
+
+- `test_smoke.gd` : chaque fichier se charge, l'autoload a son adaptateur,
+  les fenêtres du debug menu se construisent, le consentement répond.
+- `test_qa.gd` : partie, enregistrement, rejeu identique ou différent,
+  arrêt, annulation, partie introuvable, rapport.
+- `test_stats.gd` : événements et compteurs par niveau, limite, textes
+  (sans rien écrire sur le disque).
+
+Quel test lancer pour quel système, et ce qui n'est pas couvert :
+`tests/impact.md`.
