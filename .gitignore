@@ -1,0 +1,4 @@
+# Écrit par plugin.gd dans un jeu sans test runner.
+tests/.gdignore
+# Effacés par l'éditeur quand tests/ est caché : régénérés sur place.
+tests/*.uid
