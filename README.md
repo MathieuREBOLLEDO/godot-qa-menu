@@ -198,3 +198,18 @@ caractères).
   suivant.
 - Le jeu fournit son propre réglage pour changer d'avis
   (`set_consent()`) : l'addon n'a que la fenêtre du premier lancement.
+
+
+## Tests
+
+Tests automatiques dans `tests/` (fichiers `test_*.gd`, qui étendent
+`TestCase` de l'addon test runner, github.com/MathieuREBOLLEDO/godot-test-runner).
+Ils se lancent dans un jeu qui a les deux addons :
+
+```
+godot --headless --fixed-fps 60 --path <jeu> res://addons/test_runner/runner.tscn -- --dir=res://addons/qa
+```
+
+Sans test runner dans le projet, ces fichiers ne sont pas chargés (ni à
+l'import ni au lancement) ; seule leur ouverture montre une erreur de classe
+de base. Ils n'utilisent aucun fichier du jeu.
